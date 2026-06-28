@@ -397,27 +397,94 @@ section{padding:80px 20px}
 .loc-link:hover{color:var(--orange);border-bottom-color:var(--orange)}
 .loc-link svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0}
 
-/* MAPA DE SEDES */
+/* =========================================
+   MAPA DE SEDES - COMPLETO Y RESPONSIVE
+   ========================================= */
 .mapa-section{background:linear-gradient(175deg,#FFFDF7 0%,#FBEFD6 100%)}
 .mapa-hint{font-size:12px;color:var(--earth);margin-bottom:18px}
-.mapa-wrap{display:grid;grid-template-columns:1fr;gap:18px}
+.mapa-wrap{display:grid;grid-template-columns:1fr;gap:18px;position:relative;} 
 @media(min-width:880px){.mapa-wrap{grid-template-columns:1.55fr 1fr;align-items:start}}
+
 .mapa-canvas{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--gold-glow);box-shadow:0 24px 60px rgba(120,80,20,.18);background:#dfe6d8;touch-action:pan-y;}
 #map{width:100%;height:clamp(340px,58vw,520px);z-index:1}
 .mapa-canvas::after{content:'';position:absolute;inset:0;border-radius:18px;pointer-events:none;box-shadow:inset 0 0 40px rgba(30,20,5,.22),inset 0 0 0 1px rgba(255,255,255,.25);z-index:401}
+
+/* ESTILOS DEL MAPA (LEAFLET) */
 .leaflet-container{font-family:'Inter',sans-serif;background:#d0ceb8}
 .leaflet-div-icon,.venue-divicon{background:transparent;border:none}
+
+/* CONTROLES DE ZOOM */
 .leaflet-control-zoom{border:none !important;box-shadow:0 4px 14px rgba(0,0,0,.2) !important;border-radius:12px !important;overflow:hidden}
 .leaflet-control-zoom a{background:rgba(255,252,240,.92) !important;color:var(--forest-dark) !important;width:36px !important;height:36px !important;line-height:36px !important;font-size:18px !important;font-weight:600 !important;border-bottom:1px solid var(--gold-glow) !important}
 .leaflet-control-zoom a:hover{background:var(--gold) !important;color:#fff !important}
 .leaflet-control-zoom a:last-child{border-bottom:none !important}
 .leaflet-control-attribution{background:rgba(255,252,240,.82) !important;font-size:9px !important;color:#888 !important;border-radius:8px 0 0 0 !important;padding:2px 8px !important}
+
+/* BOTÓN "MI UBICACIÓN" */
+.leaflet-control-locate {
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.2) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  margin-top: 10px !important;
+}
+.leaflet-control-locate a {
+  background: rgba(255, 252, 240, 0.92) !important;
+  color: var(--forest-dark) !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px !important;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.leaflet-control-locate a:hover {
+  background: var(--gold) !important;
+  color: #fff !important;
+}
+
+/* MARCADOR DE USUARIO (PUNTITO AZUL) */
+.user-location-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-dot {
+  width: 16px;
+  height: 16px;
+  background: #4285F4;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 2;
+  position: relative;
+}
+.user-pulse {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: rgba(66, 133, 244, 0.4);
+  border-radius: 50%;
+  animation: pulseBlue 2s infinite ease-out;
+  z-index: 1;
+}
+@keyframes pulseBlue {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+/* MARCADORES PERSONALIZADOS (SEDES) */
 .venue-marker{position:relative;width:30px;height:30px;display:flex;align-items:flex-start;justify-content:center}
 .venue-marker .vm-pin{width:26px;height:26px;border-radius:50% 50% 50% 0;background:linear-gradient(135deg,var(--orange),var(--gold));transform:rotate(-45deg);box-shadow:0 3px 10px rgba(0,0,0,.4);border:2.5px solid #fff;transition:all .35s cubic-bezier(.22,1,.36,1)}
 .venue-marker .vm-pin::after{content:'';position:absolute;width:8px;height:8px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg)}
 .venue-marker.active .vm-pin{background:linear-gradient(135deg,var(--forest),var(--forest-dark));transform:rotate(-45deg) scale(1.4);box-shadow:0 5px 16px rgba(0,0,0,.5)}
 .venue-marker .vm-pulse{position:absolute;top:13px;left:50%;width:26px;height:26px;border-radius:50%;background:rgba(201,152,42,.45);transform:translate(-50%,-50%);animation:vmPulse 2s ease-out infinite;z-index:-1}
 @keyframes vmPulse{0%{transform:translate(-50%,-50%) scale(.5);opacity:.7}100%{transform:translate(-50%,-50%) scale(2.8);opacity:0}}
+
+/* TOOLTIPS Y POPUPS */
 .venue-tooltip{background:rgba(255,252,240,.94) !important;color:var(--forest-dark) !important;font-family:'Inter',sans-serif !important;font-size:11px !important;font-weight:700 !important;letter-spacing:.3px !important;border:1px solid var(--gold-glow) !important;border-radius:8px !important;padding:4px 9px !important;box-shadow:0 4px 12px rgba(0,0,0,.2) !important;white-space:nowrap !important}
 .venue-tooltip::before{border-top-color:var(--gold-glow) !important}
 .leaflet-tooltip-bottom.venue-tooltip::before{border-bottom-color:var(--gold-glow) !important}
@@ -428,20 +495,56 @@ section{padding:80px 20px}
 .vp-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--orange-dark);text-decoration:none;padding:5px 10px;background:rgba(201,152,42,.1);border-radius:8px;transition:all .2s}
 .vp-link:hover{background:var(--gold);color:#fff;text-decoration:none}
 
-/* LISTA DE SEDES - MÓVIL (Carrusel horizontal por defecto) */
+/* =========================================
+   LISTA DE SEDES - MÓVIL (Carrusel horizontal)
+   ========================================= */
 .mapa-list {
   display: flex;
   flex-direction: row;
   gap: 10px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 4px 4px 16px 4px;
+  padding: 4px 0 16px 0; 
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
 }
-.mapa-list::-webkit-scrollbar { height: 4px; }
-.mapa-list::-webkit-scrollbar-thumb { background: rgba(201,152,42,.4); border-radius: 10px; }
+.mapa-list::-webkit-scrollbar { display: none; } 
 
+/* FLECHAS INDICADORAS FLOTANTES (Sticky) */
+.mapa-list::before,
+.mapa-list::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--gold);
+  z-index: 10;
+  pointer-events: none; 
+  height: 42px; 
+  animation: sutilPulse 2s infinite ease-in-out;
+}
+.mapa-list::before {
+  content: '‹';
+  position: sticky;
+  left: 0;
+  padding: 0 12px 0 4px;
+  background: linear-gradient(to right, #FFFDF7 60%, transparent);
+}
+.mapa-list::after {
+  content: '›';
+  position: sticky;
+  right: 0;
+  padding: 0 4px 0 12px;
+  background: linear-gradient(to left, #FFFDF7 60%, transparent);
+}
+
+@keyframes sutilPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* BOTONES DE LA LISTA */
 .mapa-item {
   flex: 0 0 auto;
   width: auto;
@@ -467,12 +570,18 @@ section{padding:80px 20px}
 
 .mapa-pin { color: var(--gold); flex-shrink: 0; display: flex; }
 .mapa-pin svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
-
 .mapa-item .mapa-name { flex: 1; min-width: 0; }
-.mapa-item .mapa-arrow { display: none; } /* Oculto en celular */
+.mapa-item .mapa-arrow { display: none; } 
 
-/* LISTA DE SEDES - PC (Vertical clásica) */
+/* =========================================
+   LISTA DE SEDES - PC (Vertical clásica)
+   ========================================= */
 @media(min-width: 880px) {
+  .mapa-list::before,
+  .mapa-list::after {
+    display: none !important; 
+  }
+
   .mapa-list {
     flex-direction: column;
     overflow-x: hidden;
@@ -1642,6 +1751,44 @@ function initMap(){
     subdomains: ['mt0','mt1','mt2','mt3'],
     attribution: '© Google Maps'
   }).addTo(MAP);
+
+  /* =========================================
+     BOTÓN DE MI UBICACIÓN (INTEGRACIÓN NUEVA)
+     ========================================= */
+  const locateControl = L.control({position: 'topleft'});
+  locateControl.onAdd = function (map) {
+      const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-locate');
+      div.innerHTML = '<a href="#" title="Mi ubicación">⌖</a>';
+      
+      div.onclick = function(e){
+          e.preventDefault();
+          // Pide la ubicación y acerca la cámara
+          MAP.locate({setView: true, maxZoom: 16});
+      }
+      return div;
+  };
+  locateControl.addTo(MAP);
+
+  let userMarker;
+  MAP.on('locationfound', function(e) {
+      if (userMarker) {
+          userMarker.setLatLng(e.latlng);
+      } else {
+          const userIcon = L.divIcon({
+              className: 'user-location-marker',
+              html: '<div class="user-dot"></div><div class="user-pulse"></div>',
+              iconSize: [20, 20]
+          });
+          userMarker = L.marker(e.latlng, {icon: userIcon}).addTo(MAP);
+      }
+  });
+
+  MAP.on('locationerror', function(e) {
+      alert("No pudimos acceder a tu ubicación. Verifica los permisos de tu navegador o GPS.");
+  });
+  /* =========================================
+     FIN BOTÓN MI UBICACIÓN
+     ========================================= */
 
   VENUE_ORDER.forEach(k=>{
     const v=VENUES[k];
